@@ -59,16 +59,15 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
 
         popUpContainer.appendChild(popUpContent);
 
-        popUpContent.innerHTML = '<div id="PopUp"></div>';
+        // popUpContent.innerHTML = '<div id="PopUp"></div>';
         popUpContent.style.width = (context.parameters.PopUpWidth.raw || 200).toString();
         popUpContent.style.height = (context.parameters.PopUpHeight.raw || 100).toString();
         popUpContent.style.backgroundColor = "white";
-
-        var elmnt = document.getElementById("PopUp") || document.createElement("div");
+        
         var xhtml = new XMLHttpRequest();
         xhtml.onreadystatechange = function () {
-            if (this.status == 200) { elmnt.innerHTML = this.responseText; }
-            if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+            if (this.status == 200) { popUpContent.innerHTML = this.responseText; }
+            if (this.status == 404) { popUpContent.innerHTML = "Page not found."; }
         }
         xhtml.open("GET", context.parameters.Link.raw || "html/EmptyLink.html");
         xhtml.send();
