@@ -10,6 +10,9 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
     private button: HTMLElement;
     private popUpService: ComponentFramework.FactoryApi.Popup.PopupService;
     private div: HTMLElement;
+    private popUpContainer: HTMLElement;
+    private popUpContent: HTMLElement;
+    private closeDiv: HTMLElement;
 
     constructor() {
 
@@ -29,8 +32,8 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
 
         this.button.classList.add("btn");
         this.button.setAttribute("type", "button");
-        this.button.style.width = (context.parameters.ButtonWidth.raw || 100).toString();
-        this.button.style.height = (context.parameters.ButtonHeight.raw || 20).toString();
+        this.button.style.width = (context.parameters.ButtonWidth.raw || 100).toString() + "px";
+        this.button.style.height = (context.parameters.ButtonHeight.raw || 20).toString() + "px";
         this.button.style.backgroundColor = context.parameters.Color.raw || "blue";
         this.button.setAttribute("value", context.parameters.Text.raw?.toString() || '');
 
@@ -44,34 +47,42 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
 
         ////////////////////////////POPUP/////////////////////////////
         this.popUpService = context.factory.getPopupService();
-        let popUpContainer = document.createElement('div');
-        let popUpContent = document.createElement('div');
+        this.popUpContainer = document.createElement('div');
+        this.popUpContent = document.createElement('div');
 
-        popUpContainer.classList.add("container-fluid");
-        popUpContainer.classList.add("row");
-        popUpContainer.classList.add("d-flex");
-        popUpContainer.classList.add("h-100");
-        popUpContainer.classList.add("justify-content-center");
-        popUpContainer.classList.add("align-items-center");
+        this.popUpContainer.classList.add("container-fluid");
 
-        popUpContent.classList.add("col-6");
-        popUpContent.classList.add("d-flex");
+        this.popUpContent.classList.add("row");
 
-        popUpContainer.appendChild(popUpContent);
+        this.popUpContainer.appendChild(this.popUpContent);
 
         // popUpContent.innerHTML = '<div id="PopUp"></div>';
-        popUpContent.style.width = (context.parameters.PopUpWidth.raw || 200).toString();
-        popUpContent.style.height = (context.parameters.PopUpHeight.raw || 100).toString();
-        popUpContent.style.backgroundColor = "white";
-        
-        var xhtml = new XMLHttpRequest();
-        xhtml.onreadystatechange = function () {
-            if (this.status == 200) { popUpContent.innerHTML = this.responseText; }
-            if (this.status == 404) { popUpContent.innerHTML = "Page not found."; }
-        }
-        xhtml.open("GET", context.parameters.Link.raw || "html/EmptyLink.html");
-        xhtml.send();
-        
+        this.popUpContent.style.width = (context.parameters.PopUpWidth.raw || 200).toString() + "px";
+        this.popUpContent.style.height = (context.parameters.PopUpHeight.raw || 100).toString() + "px";
+        this.popUpContent.style.backgroundColor = "white";
+
+        this.closeDiv = document.createElement("div");
+        this.closeDiv.classList.add("col-12");
+        let closebutton = document.createElement("button");
+        closebutton.setAttribute("id", "closebtn");
+        closebutton.style.background = "top";
+        closebutton.style.border = "none";
+        closebutton.style.float = "right";
+        closebutton.innerHTML = " X ";
+        this.closeDiv.appendChild(closebutton);
+
+        //this.popUpContainer.appendChild(closeDiv);
+        //let popUpContent = this.popUpContent;
+        let popUpContainer = this.popUpContainer;
+
+        // var xhtml = new XMLHttpRequest();
+        // xhtml.onreadystatechange = function () {
+        //     if (this.status == 200) { popUpContent.innerHTML = this.responseText; }
+        //     if (this.status == 404) { popUpContent.innerHTML = "Page not found."; }
+        // }
+        // xhtml.open("GET", context.parameters.Link.raw || "html/EmptyLink.html", false);
+        // xhtml.send();
+
         let popUpOptions: PopupDev = {
             closeOnOutsideClick: true,
             content: popUpContainer,
@@ -93,10 +104,13 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
     public updateView(context: ComponentFramework.Context<IInputs>): void {
         // Add code to update control view
         this._context = context;
-        this.button.style.width = (context.parameters.ButtonWidth.raw || 200).toString();
-        this.button.style.height = (context.parameters.ButtonHeight.raw || 50).toString();
+        this.button.style.width = (context.parameters.ButtonWidth.raw || 200).toString() + "px";
+        this.button.style.height = (context.parameters.ButtonHeight.raw || 50).toString() + "px";
         this.button.style.backgroundColor = context.parameters.Color.raw || "blue";
         this.button.setAttribute("value", context.parameters.Text.raw?.toString() || '');
+        // popUpContent.innerHTML = '<div id="PopUp"></div>';
+        this.popUpContent.style.width = (context.parameters.PopUpWidth.raw || 200).toString() + "px";
+        this.popUpContent.style.height = (context.parameters.PopUpHeight.raw || 100).toString() + "px";
     }
 
     /**
@@ -118,6 +132,31 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
 
     public OpenPopUp(): void {
 
+        let popUpContent = this.popUpContent;
+
+
+        var xhtml = new XMLHttpRequest();
+        let temp = document.createElement("div");
+        temp.appendChild(this.closeDiv);
+        popUpContent.innerHTML = temp.innerHTML;
+        temp.remove();
+        xhtml.onreadystatechange = function () {
+            if (this.status == 200) { popUpContent.innerHTML += "<div class='col-12'>" + this.responseText + "</div>"; }
+            if (this.status == 404) { popUpContent.innerHTML += "<div class='col-12'>" + "Page not found." + "</div>"; }
+        }
+        xhtml.open("GET", this._context.parameters.Link.raw || "html/EmptyLink.html", false);
+        xhtml.send();
+
         this.popUpService.openPopup("Popup");
+
+        var popUpParent = document.querySelector("[openedpopups='.Popup']")?.firstElementChild?.firstElementChild;
+        if (popUpParent) {
+            popUpParent.classList.add("justify-content-center");
+            popUpParent.classList.add("align-items-center");
+        }
+
+        var btn = document.getElementById("closebtn")
+        if (btn)
+            btn.onclick = () => this.popUpService.closePopup("Popup");
     }
 }
