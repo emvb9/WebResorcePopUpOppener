@@ -65,7 +65,7 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
         this.closeDiv.classList.add("col-12");
         let closebutton = document.createElement("button");
         closebutton.setAttribute("id", "closebtn");
-        closebutton.style.background = "top";
+        closebutton.style.background = "transparent";
         closebutton.style.border = "none";
         closebutton.style.float = "right";
         closebutton.innerHTML = " X ";
