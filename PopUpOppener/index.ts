@@ -31,9 +31,10 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
         this.button = document.createElement("input");
 
         this.button.classList.add("btn");
+
         this.button.setAttribute("type", "button");
-        this.button.style.width = (context.parameters.ButtonWidth.raw || 100).toString() + "px";
-        this.button.style.height = (context.parameters.ButtonHeight.raw || 20).toString() + "px";
+        this.button.style.width = (context.parameters.ButtonWidth.raw || 100).toString();
+        this.button.style.height = (context.parameters.ButtonHeight.raw || 20).toString();
         this.button.style.backgroundColor = context.parameters.Color.raw || "blue";
         this.button.setAttribute("value", context.parameters.Text.raw?.toString() || '');
 
@@ -57,31 +58,20 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
         this.popUpContainer.appendChild(this.popUpContent);
 
         // popUpContent.innerHTML = '<div id="PopUp"></div>';
-        this.popUpContent.style.width = (context.parameters.PopUpWidth.raw || 200).toString() + "px";
-        this.popUpContent.style.height = (context.parameters.PopUpHeight.raw || 100).toString() + "px";
+        this.popUpContent.style.width = (context.parameters.PopUpWidth.raw || 200).toString();
+        this.popUpContent.style.height = (context.parameters.PopUpHeight.raw || 100).toString();
         this.popUpContent.style.backgroundColor = "white";
 
         this.closeDiv = document.createElement("div");
         this.closeDiv.classList.add("col-12");
         let closebutton = document.createElement("button");
         closebutton.setAttribute("id", "closebtn");
-        closebutton.style.background = "transparent";
-        closebutton.style.border = "none";
-        closebutton.style.float = "right";
+        closebutton.classList.add("closeButton");
         closebutton.innerHTML = " X ";
+
         this.closeDiv.appendChild(closebutton);
 
-        //this.popUpContainer.appendChild(closeDiv);
-        //let popUpContent = this.popUpContent;
         let popUpContainer = this.popUpContainer;
-
-        // var xhtml = new XMLHttpRequest();
-        // xhtml.onreadystatechange = function () {
-        //     if (this.status == 200) { popUpContent.innerHTML = this.responseText; }
-        //     if (this.status == 404) { popUpContent.innerHTML = "Page not found."; }
-        // }
-        // xhtml.open("GET", context.parameters.Link.raw || "html/EmptyLink.html", false);
-        // xhtml.send();
 
         let popUpOptions: PopupDev = {
             closeOnOutsideClick: true,
@@ -104,13 +94,13 @@ export class PopUpOppener implements ComponentFramework.StandardControl<IInputs,
     public updateView(context: ComponentFramework.Context<IInputs>): void {
         // Add code to update control view
         this._context = context;
-        this.button.style.width = (context.parameters.ButtonWidth.raw || 200).toString() + "px";
-        this.button.style.height = (context.parameters.ButtonHeight.raw || 50).toString() + "px";
+        this.button.style.width = (context.parameters.ButtonWidth.raw || 200).toString();
+        this.button.style.height = (context.parameters.ButtonHeight.raw || 50).toString();
         this.button.style.backgroundColor = context.parameters.Color.raw || "blue";
         this.button.setAttribute("value", context.parameters.Text.raw?.toString() || '');
         // popUpContent.innerHTML = '<div id="PopUp"></div>';
-        this.popUpContent.style.width = (context.parameters.PopUpWidth.raw || 200).toString() + "px";
-        this.popUpContent.style.height = (context.parameters.PopUpHeight.raw || 100).toString() + "px";
+        this.popUpContent.style.width = (context.parameters.PopUpWidth.raw || 200).toString();
+        this.popUpContent.style.height = (context.parameters.PopUpHeight.raw || 100).toString();
     }
 
     /**
