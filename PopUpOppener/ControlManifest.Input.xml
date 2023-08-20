@@ -7,13 +7,13 @@
     </external-service-usage>
     
     <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-    <property name="Link" display-name-key="Link" description-key="Link" of-type="SingleLine.Text" usage="input" required="true" />
-    <property name="Text" display-name-key="Text" description-key="Text" of-type="SingleLine.Text" usage="input" required="true" />
-    <property name="Color" display-name-key="Color" description-key="Color" of-type="SingleLine.Text" usage="input" required="false" />
-    <property name="ButtonWidth" display-name-key="ButtonWidth" description-key="ButtonWidth" of-type="SingleLine.Text" usage="input" required="false" />
-    <property name="ButtonHeight" display-name-key="ButtonHeight" description-key="ButtonHeight" of-type="SingleLine.Text" usage="input" required="false" />
-    <property name="PopUpWidth" display-name-key="PopUpWidth" description-key="PopUpWidth" of-type="SingleLine.Text" usage="input" required="true" />
-    <property name="PopUpHeight" display-name-key="PopUpHeight" description-key="PopUpHeight" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="Link" display-name-key="WebResource Link" description-key="WebResource Link desc" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="Text" display-name-key="Button Text" description-key="Button Text desc" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="Color" display-name-key="Button Color" description-key="Button Color desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="ButtonWidth" display-name-key="Button Width" description-key="Button Width desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="ButtonHeight" display-name-key="Button Height" description-key="Button Height desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="PopUpWidth" display-name-key="PopUp Width" description-key="PopUp Width desc" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="PopUpHeight" display-name-key="PopUp Height" description-key="PopUp Height desc" of-type="SingleLine.Text" usage="input" required="true" />
     
     <resources>
       <code path="index.ts" order="1"/>
